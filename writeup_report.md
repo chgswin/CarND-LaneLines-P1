@@ -3,16 +3,14 @@
 
 **Finding Lane Lines on the Road**
 
-The goals / steps of this project are the following:
+The goals of this project are the following:
 * Revise fundamental knowledge in Computer Vision.
 * Apply computer vision techniques, including Canny Edge Detection and Hough Transform to detect the lane lines in given images.
-* 
-
-
-
 ---
 
 ### Reflection
+[image1]: ./examples/grayscale.jpg "Grayscale"
+[image_hough]: ./examples/Drawline.PNG "Hough lines"
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
@@ -21,8 +19,8 @@ In this project, I built the pipeline that consists of 7 steps, each step is ass
 #### (a) The basic pipeline:
 
 ##### 1. Grayscale the image.
-[image1]: ./examples/grayscale.jpg "Grayscale"
 
+![Grayscale][image1]
 ##### 2.  Apply the Gaussian Blur with kernel_size = 3 to reduce the sporadic change.
 ##### 3.  Apply Canny Edge Detection with the ratio min : max threshold = 1 : 3. Particularly, min_threshold = 80, max_threshold = 240.
 ##### 4.  Determine the region of interest that encapsulates the lane lines. In this case, it will be a trapezium with four vertices having the following cordinates: (the width and height of the image is 960 and 540, respectively).      
@@ -32,10 +30,12 @@ In this project, I built the pipeline that consists of 7 steps, each step is ass
     <li>(500, 330)</li>
     <li>(960, 540)</li>
 </ul>
-##### 5. Apply the Hough transform to extract the edges. In this given set of images, the edges are expected to be the borders of the lane lines. 
-[image_hough]: /examples/Drawline.PNG "Hough lines" 
-##### 6. Calculate the lane lines.
 
+##### 5. Apply the Hough transform to extract the edges. In this given set of images, the edges are expected to be the borders of the lane lines. 
+ 
+![Hough lines][image_hough]
+
+##### 6. Calculate the lane lines.
 <p>How did I design the draw_lines?</p>
 <p>As required, the lane lines must be extrapolated (extended) to two ends of the region of interest. In order to achieve this, </p>
 <ol>
@@ -49,9 +49,6 @@ In this project, I built the pipeline that consists of 7 steps, each step is ass
 #### (b) Further enhancement:
 
 It is observed that the pipeline works fairly well in the given videos. However, the lane lines detected are not stable on the screen as they oscillate around the actual lane lines. To further stabilize the detected lane lines, I used a 4-point FIR average filter to reduce the dramatic changes between different image frames. The FIR average filter takes the mean of the last four gradients and intercepts (notes that each line is represented as *y = mx + c* ) and the returned values will be the output gradients and intercepts. 
-
-![alt text][image1]
-
 
 ### 2. Identify potential shortcomings with your current pipeline
 
